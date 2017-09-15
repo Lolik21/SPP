@@ -10,12 +10,15 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Configuration;
 using System.Reflection;
+using System.Linq;
+using StackExchange.Redis;
 
 namespace Server
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class Service : IContract
     {
+        
         private const string DB_NAME = "QueryDump.db";
         private const string DB_TABLE_NAME = "dump";
         private const string DB_FIELD_NAME = "obj";
@@ -155,12 +158,12 @@ namespace Server
 
         private Type GetType(string Name)
         {
-            FileInfo[] Assemblyes;
             DirectoryInfo Folder = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
-            Assemblyes = Folder.GetFiles("*.dll | *.exe");
-            foreach (FileInfo inf in Assemblyes)
+            var Assemblyes = Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory, "*.*", SearchOption.AllDirectories)
+                .Where(s => s.EndsWith(".dll") || s.EndsWith(".exe"));
+            foreach (string FileName in Assemblyes)
             {
-                Assembly asm = Assembly.LoadFile(inf.FullName);
+                Assembly asm = Assembly.LoadFile(FileName);
                 Type type = asm.GetType(Name);
                 if (type != null) return type;
             }
@@ -176,7 +179,7 @@ namespace Server
                     try
                     {
                         QMessage Message = (QMessage)DeserializeObj(Query[0],typeof(QMessage));
-                        Type type = GetType(Message.Obj);
+                        Type type = GetType(Message.ClassName);
                         if (type != null)
                         {
                             object DesObj = DeserializeObj(Message.Obj, type);

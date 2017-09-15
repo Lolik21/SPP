@@ -33,7 +33,8 @@ namespace Client
                     string SerializedObj = SerializeObj(arr[i], arr[i].GetType());
                     QMessage msg = new QMessage();
                     msg.Obj = SerializedObj;
-                    msg.ClassName = arr[i].GetType().Name;
+                    Type t = arr[i].GetType();
+                    msg.ClassName = t.Namespace + "." + t.Name;
                     msg.QueryName = "asdasd";
                     channel.AddMessage(SerializeObj(msg, msg.GetType()));
                 }

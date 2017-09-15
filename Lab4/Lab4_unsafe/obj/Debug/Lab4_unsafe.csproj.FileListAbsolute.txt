@@ -1,0 +1,7 @@
+C:\Users\Ilya\Documents\GitHub\SPP\Lab4\Lab4_unsafe\obj\Debug\Lab4_unsafe.csprojResolveAssemblyReference.cache
+C:\Users\Ilya\Documents\GitHub\SPP\Lab4\Lab4_unsafe\obj\Debug\Lab4_unsafe.csproj.CoreCompileInputs.cache
+C:\Users\Ilya\Documents\GitHub\SPP\Lab4\Lab4_unsafe\bin\Debug\Lab4_unsafe.exe.config
+C:\Users\Ilya\Documents\GitHub\SPP\Lab4\Lab4_unsafe\bin\Debug\Lab4_unsafe.exe
+C:\Users\Ilya\Documents\GitHub\SPP\Lab4\Lab4_unsafe\bin\Debug\Lab4_unsafe.pdb
+C:\Users\Ilya\Documents\GitHub\SPP\Lab4\Lab4_unsafe\obj\Debug\Lab4_unsafe.exe
+C:\Users\Ilya\Documents\GitHub\SPP\Lab4\Lab4_unsafe\obj\Debug\Lab4_unsafe.pdb

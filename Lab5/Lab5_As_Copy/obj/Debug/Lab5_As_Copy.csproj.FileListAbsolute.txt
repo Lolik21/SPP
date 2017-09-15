@@ -1,0 +1,7 @@
+C:\Users\Ilya\Documents\GitHub\SPP\Lab5\Lab5_As_Copy\bin\Debug\Lab5_As_Copy.exe.config
+C:\Users\Ilya\Documents\GitHub\SPP\Lab5\Lab5_As_Copy\bin\Debug\Lab5_As_Copy.exe
+C:\Users\Ilya\Documents\GitHub\SPP\Lab5\Lab5_As_Copy\bin\Debug\Lab5_As_Copy.pdb
+C:\Users\Ilya\Documents\GitHub\SPP\Lab5\Lab5_As_Copy\obj\Debug\Lab5_As_Copy.csprojResolveAssemblyReference.cache
+C:\Users\Ilya\Documents\GitHub\SPP\Lab5\Lab5_As_Copy\obj\Debug\Lab5_As_Copy.csproj.CoreCompileInputs.cache
+C:\Users\Ilya\Documents\GitHub\SPP\Lab5\Lab5_As_Copy\obj\Debug\Lab5_As_Copy.exe
+C:\Users\Ilya\Documents\GitHub\SPP\Lab5\Lab5_As_Copy\obj\Debug\Lab5_As_Copy.pdb

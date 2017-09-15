@@ -1,0 +1,7 @@
+C:\Users\Ilya\Documents\GitHub\SPP\Lab1\Lab_1_Reflections\Lab_1_Reflections\bin\Debug\Lab_1_Reflections.exe.config
+C:\Users\Ilya\Documents\GitHub\SPP\Lab1\Lab_1_Reflections\Lab_1_Reflections\bin\Debug\Lab_1_Reflections.exe
+C:\Users\Ilya\Documents\GitHub\SPP\Lab1\Lab_1_Reflections\Lab_1_Reflections\bin\Debug\Lab_1_Reflections.pdb
+C:\Users\Ilya\Documents\GitHub\SPP\Lab1\Lab_1_Reflections\Lab_1_Reflections\obj\Debug\Lab_1_Reflections.csprojResolveAssemblyReference.cache
+C:\Users\Ilya\Documents\GitHub\SPP\Lab1\Lab_1_Reflections\Lab_1_Reflections\obj\Debug\Lab_1_Reflections.csproj.CoreCompileInputs.cache
+C:\Users\Ilya\Documents\GitHub\SPP\Lab1\Lab_1_Reflections\Lab_1_Reflections\obj\Debug\Lab_1_Reflections.exe
+C:\Users\Ilya\Documents\GitHub\SPP\Lab1\Lab_1_Reflections\Lab_1_Reflections\obj\Debug\Lab_1_Reflections.pdb

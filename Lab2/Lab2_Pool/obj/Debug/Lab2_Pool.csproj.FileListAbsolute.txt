@@ -1,0 +1,7 @@
+C:\Users\Ilya\Documents\GitHub\SPP\Lab2\Lab2_Pool\bin\Debug\Lab2_Pool.exe.config
+C:\Users\Ilya\Documents\GitHub\SPP\Lab2\Lab2_Pool\bin\Debug\Lab2_Pool.exe
+C:\Users\Ilya\Documents\GitHub\SPP\Lab2\Lab2_Pool\bin\Debug\Lab2_Pool.pdb
+C:\Users\Ilya\Documents\GitHub\SPP\Lab2\Lab2_Pool\obj\Debug\Lab2_Pool.csprojResolveAssemblyReference.cache
+C:\Users\Ilya\Documents\GitHub\SPP\Lab2\Lab2_Pool\obj\Debug\Lab2_Pool.csproj.CoreCompileInputs.cache
+C:\Users\Ilya\Documents\GitHub\SPP\Lab2\Lab2_Pool\obj\Debug\Lab2_Pool.exe
+C:\Users\Ilya\Documents\GitHub\SPP\Lab2\Lab2_Pool\obj\Debug\Lab2_Pool.pdb

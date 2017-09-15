@@ -1,0 +1,6 @@
+C:\Users\Ilya\Documents\GitHub\SPP\Lab6\WCF_Lab6\Service_Contract\bin\Debug\Service_Contract.dll
+C:\Users\Ilya\Documents\GitHub\SPP\Lab6\WCF_Lab6\Service_Contract\bin\Debug\Service_Contract.pdb
+C:\Users\Ilya\Documents\GitHub\SPP\Lab6\WCF_Lab6\Service_Contract\obj\Debug\Service_Contract.csprojResolveAssemblyReference.cache
+C:\Users\Ilya\Documents\GitHub\SPP\Lab6\WCF_Lab6\Service_Contract\obj\Debug\Service_Contract.csproj.CoreCompileInputs.cache
+C:\Users\Ilya\Documents\GitHub\SPP\Lab6\WCF_Lab6\Service_Contract\obj\Debug\Service_Contract.dll
+C:\Users\Ilya\Documents\GitHub\SPP\Lab6\WCF_Lab6\Service_Contract\obj\Debug\Service_Contract.pdb

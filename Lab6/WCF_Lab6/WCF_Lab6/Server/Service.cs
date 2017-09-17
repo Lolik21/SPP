@@ -35,6 +35,20 @@ namespace Server
         {
             Query = new List<string>();
             InitConnectToDB();
+            string Query_1 = "Q_1";
+            string Query_2 = "Q_2";
+
+
+
+            ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("localhost");
+            IDatabase db = redis.GetDatabase();
+            
+            string value = "abcdefg";
+            db.StringSet("mykey", value);
+            value = db.StringGet("mykey");
+            Console.WriteLine(value); // writes: "abcdefg"
+
+
             int Time = Convert.ToInt32(ConfigurationManager.AppSettings["Dump"]);
             WorkerCallback = new TimerCallback(DoWork);
             WorkerTimer = new Timer(WorkerCallback, null, 0, 5000);

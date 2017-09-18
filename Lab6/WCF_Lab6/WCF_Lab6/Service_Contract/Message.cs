@@ -14,8 +14,5 @@ namespace Service_Contract
         public string Obj { get; set; }
         [DataMember]
         public string ClassName { get; set; }
-        [DataMember]
-        public string QueryName { get; set; }
-
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace Client
 {
@@ -25,29 +26,25 @@ namespace Client
 
                 IContract channel = factory.CreateChannel();
 
-                QClass[] arr = new QClass[10];
+                QClass[] arr = new QClass[50];
+                List<string> strs = new List<string>();
+                Random rnd = new Random();
 
-                for (int i = 0; i < arr.Length; i++)
-                {
-                    arr[i] = new QClass(i, RandomString(3), RandomString(3));
-                    string SerializedObj = SerializeObj(arr[i], arr[i].GetType());
-                    QMessage msg = new QMessage();
-                    msg.Obj = SerializedObj;
-                    Type t = arr[i].GetType();
-                    msg.ClassName = t.Namespace + "." + t.Name;
-                    msg.QueryName = "asdasd";
-                    channel.AddMessage(SerializeObj(msg, msg.GetType()));
-                }
-                //Thread.Sleep(1000);
-                //channel.DumpQuery(new object());
-                //Thread.Sleep(30000);
-                //channel.RestoreQuery();
-                //QClass cl = new QClass(777, RandomString(3), RandomString(3));
-                //string SObj = SerializeObj(cl);
-                //channel.AddMessage(SObj);
-                //channel.RemoveMessage(SObj);
+                //for (int i = 0; i < arr.Length; i++)
+                //{
+                //    arr[i] = new QClass(i, RandomString(3), RandomString(3));
+                //    string SerializedObj = SerializeObj(arr[i], arr[i].GetType());
+                //    QMessage msg = new QMessage();
+                //    msg.Obj = SerializedObj;
+                //    Type t = arr[i].GetType();
+                //    msg.ClassName = t.Namespace + "." + t.Name;
+                //    strs.Add("Query_" + Convert.ToString(rnd.Next(3) + 1) + SerializeObj(msg, msg.GetType()));
+                //    channel.AddMessage(strs[i]);
+                //}
+                //channel.RemoveMessage(strs[49]);
 
-                //channel.RestoreQuery();
+                channel.RestoreQuery();
+
 
 
             }

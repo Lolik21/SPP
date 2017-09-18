@@ -17,43 +17,82 @@ namespace Server
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class Service : IContract
-    {
-        
+    {       
         private const string DB_NAME = "QueryDump.db";
         private const string DB_TABLE_NAME = "dump";
         private const string DB_FIELD_NAME = "obj";
+        private const string DB_FIELD_QNAME = "qname";
+        private const string Q_START_NAMES = "Query";
+        private const string W_START_NAMES = "Worker";
 
-        private TimerCallback WorkerCallback,DumpCallback;
-        private Timer WorkerTimer, DumpTimer;      
+        private TimerCallback DumpCallback;
+        private Timer  DumpTimer;      
         private object Loker = new object();
         
         private List<string> Query { get; set; }
         private string FileForDump { get; set; }
-
+        private List<Query> Querys { get; set; }
+        private List<Worker> Workers { get; set; }
+        private ConnectionMultiplexer Redis { get; set; }
 
         public Service()
         {
             Query = new List<string>();
             InitConnectToDB();
-            string Query_1 = "Q_1";
-            string Query_2 = "Q_2";
 
+            Querys = new List<Query>();
+            Workers = new List<Worker>();
 
+            Redis = ConnectionMultiplexer.Connect("localhost");
 
-            ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("localhost");
-            IDatabase db = redis.GetDatabase();
-            
-            string value = "abcdefg";
-            db.StringSet("mykey", value);
-            value = db.StringGet("mykey");
-            Console.WriteLine(value); // writes: "abcdefg"
+            string[] keys = ConfigurationManager.AppSettings.AllKeys;
 
+            SetQuerys(keys);
+            SetWorkers(keys); 
 
             int Time = Convert.ToInt32(ConfigurationManager.AppSettings["Dump"]);
-            WorkerCallback = new TimerCallback(DoWork);
-            WorkerTimer = new Timer(WorkerCallback, null, 0, 5000);
+            
             DumpCallback = new TimerCallback(DumpQuery);
             DumpTimer = new Timer(DumpCallback, null, Time, Time);
+        }
+
+        void SetWorkerQuerys(string Q_Names, Worker NewWorker)
+        {
+            for (int j = 0; j < Querys.Count; j++)
+            {
+                if (Q_Names.IndexOf(Querys[j].RedisKey) != -1)
+                {
+                    NewWorker.Queryes.Add(Querys[j]);
+                }
+            }
+        }
+
+        void SetWorkers(string[] keys)
+        {
+            for (int i = 0; i < keys.Length; i++)
+            {
+                if (keys[i].IndexOf(W_START_NAMES) != -1)
+                {
+                    string Q_Names = ConfigurationManager.AppSettings[keys[i]];
+                    Worker NewWorker = new Worker(Redis,this.Loker);
+                    NewWorker.Name = keys[i];
+                    SetWorkerQuerys(Q_Names, NewWorker);
+                    Workers.Add(NewWorker);
+                }
+            }
+        }
+
+        void SetQuerys(string[] keys)
+        {
+            for (int i = 0; i < keys.Length; i++)
+            {
+                if (keys[i].IndexOf(Q_START_NAMES) != -1)
+                {
+                    int Priority = Convert.ToInt32(ConfigurationManager.AppSettings[keys[i]]);
+                    Query NewQuery = new Query(keys[i], Priority);
+                    Querys.Add(NewQuery);
+                }
+            }
         }
 
         private void InitConnectToDB()
@@ -99,7 +138,8 @@ namespace Server
         private void CreateDumpTable(SQLiteConnection connection)
         {
             SQLiteCommand command = new SQLiteCommand(string.Format("CREATE TABLE `{0}` " +
-                "(id INTEGER PRIMARY KEY, {1} TEXT)",DB_TABLE_NAME, DB_FIELD_NAME));
+                "(id INTEGER PRIMARY KEY, {1} TEXT, {2} TEXT)",DB_TABLE_NAME, 
+                DB_FIELD_NAME, DB_FIELD_QNAME));
             command.Connection = connection;
             command.ExecuteNonQuery();
             Console.WriteLine("Таблица в БД успешно создана");
@@ -134,12 +174,54 @@ namespace Server
             }
         }
 
+        private bool CheckQuerys(string QName)
+        {
+            foreach(Query q in Querys)
+            {
+                if (q.RedisKey == QName) return true;
+            }
+            return false;
+        }
+
+        private string GetQName(string Obj)
+        {
+            for(int i = 0; i < Querys.Count; i++)
+            {
+                if (Obj.IndexOf(Querys[i].RedisKey) != -1)
+                {
+                    return Querys[i].RedisKey;
+                }
+            }
+            return null;
+        }
+
+        private string GetQMessage(string Obj)
+        {
+            for (int i = 0; i < Querys.Count; i++)
+            {
+                if (Obj.IndexOf(Querys[i].RedisKey) != -1)
+                {
+                    return Obj.Replace(Querys[i].RedisKey, "");
+                }
+            }
+            return null;
+        }
+
         public void AddMessage(string Obj)
         {
             lock(Loker)
             {
-                Query.Add(Obj);
-                Console.WriteLine("Пришло:"+Obj);
+                string QName = GetQName(Obj);
+                string QMessage = GetQMessage(Obj);
+                if (QName == null) return;
+                if (QMessage == null) return;
+                if (CheckQuerys(QName))
+                {
+                    IDatabase db = Redis.GetDatabase();
+                    db.ListRightPush(QName, QMessage);
+                    Console.WriteLine("Пришло:" + Obj);
+                }
+                
             }
         }
 
@@ -147,73 +229,15 @@ namespace Server
         {
             lock (Loker)
             {
-                if (Query.Remove(Obj))
-                {
-                    Console.WriteLine("Удалено: " + Obj);
-                    return true;
-                }
-                    
-                else return false;
-            }
-        }
-
-
-        private object DeserializeObj(string JSON_Str, Type type)
-        {
-            DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(type);
-            object Obj;
-            using (MemoryStream stream = new MemoryStream(Encoding.Default.GetBytes(JSON_Str)))
-            {
-                Obj = jsonFormatter.ReadObject(stream);
-            }
-
-            return Obj;
-        }
-
-        private Type GetType(string Name)
-        {
-            DirectoryInfo Folder = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
-            var Assemblyes = Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory, "*.*", SearchOption.AllDirectories)
-                .Where(s => s.EndsWith(".dll") || s.EndsWith(".exe"));
-            foreach (string FileName in Assemblyes)
-            {
-                Assembly asm = Assembly.LoadFile(FileName);
-                Type type = asm.GetType(Name);
-                if (type != null) return type;
-            }
-            return null;
-        }
-
-        public void DoWork(object obj)
-        {
-            lock (Loker)
-            {
-                if (Query.Count != 0)
-                {
-                    try
-                    {
-                        QMessage Message = (QMessage)DeserializeObj(Query[0],typeof(QMessage));
-                        Type type = GetType(Message.ClassName);
-                        if (type != null)
-                        {
-                            object DesObj = DeserializeObj(Message.Obj, type);
-                            if (DesObj is IBaseJob)
-                            {
-                                IBaseJob Job = DesObj as IBaseJob;
-                                Job.Perform();
-                            }
-                        }                      
-                    }
-                    catch(Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-                    finally
-                    {
-                        Query.RemoveAt(0);
-                    }
-                    
-                }
+                string QName = GetQName(Obj);
+                string QMessage = GetQMessage(Obj);
+                if (QName == null) return false;
+                if (QMessage == null) return false;
+                IDatabase db = Redis.GetDatabase();
+                long ret = db.ListRemove(QName, QMessage);
+                if (ret == 0) return false; 
+                Console.WriteLine("Удалено: " + Obj);
+                return true;
             }
         }
 
@@ -239,12 +263,19 @@ namespace Server
                 using (var command = new SQLiteCommand(connection))
                 {
                     command.Connection.Open();
-                        
-                    foreach (string ServiceMessage in Query)
+                    IDatabase db = Redis.GetDatabase();
+                    int K = 0;
+                    foreach(Query query in Querys)
                     {
-                        command.CommandText = string.Format("INSERT INTO {0} ({1}) VALUES ('{2}')",
-                        DB_TABLE_NAME, DB_FIELD_NAME, ServiceMessage);
-                        command.ExecuteNonQuery();
+                        string Message = null;
+                        while ((Message = db.ListGetByIndex(query.RedisKey, K)) != null)
+                        {
+                            command.CommandText = string.Format("INSERT INTO {0} ({1},{2}) VALUES ('{3}','{4}')",
+                                                    DB_TABLE_NAME, DB_FIELD_NAME, DB_FIELD_QNAME, Message, query.RedisKey);
+                            command.ExecuteNonQuery();
+                            K++;
+                        }
+                        
                     }
                 }
                 
@@ -264,12 +295,23 @@ namespace Server
 
         private void RestoreMessages(SQLiteDataReader reader)
         {
+            IDatabase db = Redis.GetDatabase();
             foreach (DbDataRecord record in reader)
             {
-                string CurrStr = record[DB_FIELD_NAME].ToString();
-                if (Query.Find(x => x == CurrStr) == null)
+                string QMessage = record[DB_FIELD_NAME].ToString();
+                string QKey = record[DB_FIELD_QNAME].ToString();
+                RedisValue[] strs = db.ListRange(QKey);
+
+                bool IsExists = false;
+
+                foreach(string str in strs)
                 {
-                    Query.Add(CurrStr);
+                    if (QMessage == str) IsExists = true;
+                }
+
+                if (!IsExists)
+                {
+                    db.ListRightPush(QKey, QMessage);
                 }
             }
             
@@ -280,8 +322,8 @@ namespace Server
             using (var connection = new SQLiteConnection(
                    string.Format("Data Source={0}", FileForDump)))
             {
-                using (var command = new SQLiteCommand(string.Format("SELECT {0} FROM {1} "
-                    , DB_FIELD_NAME, DB_TABLE_NAME), connection))
+                using (var command = new SQLiteCommand(string.Format("SELECT {0},{1} FROM {2} "
+                    , DB_FIELD_NAME, DB_FIELD_QNAME, DB_TABLE_NAME), connection))
                 {
                     command.Connection.Open();
                     SQLiteDataReader reader = command.ExecuteReader();

@@ -16,3 +16,12 @@ C:\Users\NotePad.by\Documents\GitHub\SPP\Lab6\WCF_Lab6\WCF_Lab6\Client\obj\Debug
 C:\Users\NotePad.by\Documents\GitHub\SPP\Lab6\WCF_Lab6\WCF_Lab6\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
 C:\Users\NotePad.by\Documents\GitHub\SPP\Lab6\WCF_Lab6\WCF_Lab6\Client\obj\Debug\Client.exe
 C:\Users\NotePad.by\Documents\GitHub\SPP\Lab6\WCF_Lab6\WCF_Lab6\Client\obj\Debug\Client.pdb
+C:\Users\Ilya\Documents\GitHub\SPP\Lab6\WCF_Lab6\WCF_Lab6\Client\bin\Debug\Client.exe.config
+C:\Users\Ilya\Documents\GitHub\SPP\Lab6\WCF_Lab6\WCF_Lab6\Client\bin\Debug\Client.exe
+C:\Users\Ilya\Documents\GitHub\SPP\Lab6\WCF_Lab6\WCF_Lab6\Client\bin\Debug\Client.pdb
+C:\Users\Ilya\Documents\GitHub\SPP\Lab6\WCF_Lab6\WCF_Lab6\Client\bin\Debug\Service_Contract.dll
+C:\Users\Ilya\Documents\GitHub\SPP\Lab6\WCF_Lab6\WCF_Lab6\Client\bin\Debug\Service_Contract.pdb
+C:\Users\Ilya\Documents\GitHub\SPP\Lab6\WCF_Lab6\WCF_Lab6\Client\obj\Debug\Client.csprojResolveAssemblyReference.cache
+C:\Users\Ilya\Documents\GitHub\SPP\Lab6\WCF_Lab6\WCF_Lab6\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
+C:\Users\Ilya\Documents\GitHub\SPP\Lab6\WCF_Lab6\WCF_Lab6\Client\obj\Debug\Client.exe
+C:\Users\Ilya\Documents\GitHub\SPP\Lab6\WCF_Lab6\WCF_Lab6\Client\obj\Debug\Client.pdb

@@ -54,3 +54,5 @@ C:\Users\Ilya\Documents\GitHub\SPP\Lab6\WCF_Lab6\WCF_Lab6\Server\obj\Debug\Serve
 C:\Users\Ilya\Documents\GitHub\SPP\Lab6\WCF_Lab6\WCF_Lab6\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
 C:\Users\Ilya\Documents\GitHub\SPP\Lab6\WCF_Lab6\WCF_Lab6\Server\obj\Debug\Server.exe
 C:\Users\Ilya\Documents\GitHub\SPP\Lab6\WCF_Lab6\WCF_Lab6\Server\obj\Debug\Server.pdb
+C:\Users\NotePad.by\Documents\GitHub\SPP\Lab6\WCF_Lab6\WCF_Lab6\Server\bin\Debug\StackExchange.Redis.dll
+C:\Users\NotePad.by\Documents\GitHub\SPP\Lab6\WCF_Lab6\WCF_Lab6\Server\bin\Debug\StackExchange.Redis.xml

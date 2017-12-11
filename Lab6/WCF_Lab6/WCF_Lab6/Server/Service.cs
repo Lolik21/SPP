@@ -319,6 +319,9 @@ namespace Server
 
         public void Restore()
         {
+            int[] peopleInLine = new int[10];
+            List<int> p = peopleInLine.ToList<int>();
+            p.FindAll()
             using (var connection = new SQLiteConnection(
                    string.Format("Data Source={0}", FileForDump)))
             {

@@ -1,9 +1,9 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DistinctLogUrlComparer.cs" company="Ilya's company">
+// <copyright file="DistinctContainerUrlComparer.cs" company="Ilya's company">
 //   All rights are reserved
 // </copyright>
 // <summary>
-//   Defines the DistinctLogUrlComparer type.
+//   Defines the DistinctContainerUrlComparer type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -12,9 +12,9 @@ namespace Logger.Helpers
     using System.Collections.Generic;
 
     /// <summary>
-    /// The distinct log url comparer.
+    /// The distinct container url comparer.
     /// </summary>
-    public class DistinctLogUrlComparer : IEqualityComparer<Log>
+    public class DistinctContainerUrlComparer : IEqualityComparer<Container>
     {
         /// <summary>
         /// The equals.
@@ -28,9 +28,9 @@ namespace Logger.Helpers
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public bool Equals(Log x, Log y)
+        public bool Equals(Container x, Container y)
         {
-            return y != null && (x != null && x.Url == y.Url);
+            return y != null && (x != null && x.Log.Url == y.Log.Url);
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Logger.Helpers
         /// <returns>
         /// The <see cref="int"/>.
         /// </returns>
-        public int GetHashCode(Log obj)
+        public int GetHashCode(Container obj)
         {
             return 1;
         }

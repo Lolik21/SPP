@@ -64,10 +64,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\DistinctIpConteinerUrlComparer.cs" />
+    <Compile Include="Helpers\DistinctIpContainerUrlComparer.cs" />
     <Compile Include="Helpers\DistinctLogUrlComparer.cs" />
     <Compile Include="Helpers\Container.cs" />
-    <Compile Include="Helpers\DistinctConteinerUrlComparer.cs" />
+    <Compile Include="Helpers\DistinctContainerUrlComparer.cs" />
     <Compile Include="Helpers\IpContainer.cs" />
     <Compile Include="Helpers\IpSource.cs" />
     <Compile Include="Log.cs" />
